@@ -1,8 +1,8 @@
 {
-  "name": "api-flow",
+  "name": "@imtiaz-dev/api-flow",
   "version": "1.0.0",
   "description": "The easiest and most powerful API client for JavaScript and TypeScript applications",
-  "author": "api-flow contributors",
+  "author": "imtiaz-dev",
   "license": "MIT",
   "keywords": [
     "api",
@@ -23,7 +23,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/api-flow/api-flow.git"
+    "url": "git+https://github.com/imtiaz-dev-0/api-flow.git"
   },
   "bugs": {
     "url": "https://github.com/api-flow/api-flow/issues"
