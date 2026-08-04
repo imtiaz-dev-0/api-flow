@@ -1,4 +1,4 @@
-name: Publish
+name: Release
 
 on:
   push:
@@ -10,35 +10,56 @@ concurrency:
 
 jobs:
   release:
-    name: Release
+    name: Release to npm
     runs-on: ubuntu-latest
-    if: ${{ !contains(github.event.head_commit.message, 'skip ci') }}
     permissions:
-      contents: write
-      id-token: write
+      contents: write       # push git tags + create GitHub releases
+      pull-requests: write  # create/update the "Version Packages" PR
+      id-token: write       # npm provenance
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0    # full history for changeset diff
           token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - uses: actions/setup-node@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
+          cache: npm
           registry-url: https://registry.npmjs.org
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm test
-      - run: pnpm build
-      - name: Create Release Pull Request or Publish
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Create Release PR or Publish
+        id: changesets
         uses: changesets/action@v1
         with:
-          publish: pnpm release
-          title: "chore: version packages"
-          commit: "chore: version packages"
+          # When a changeset PR is merged into main, this publishes to npm
+          publish: npm run release
+          # Title and commit message for the auto-generated version bump PR
+          title: "chore(release): version packages"
+          commit: "chore(release): version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
+          NPM_CONFIG_PROVENANCE: "true"
+
+      - name: Create GitHub Release
+        if: steps.changesets.outputs.published == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ fromJson(steps.changesets.outputs.publishedPackages)[0].version }}
+          name: api-flow v${{ fromJson(steps.changesets.outputs.publishedPackages)[0].version }}
+          body: |
+            See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for release notes.
+          generate_release_notes: true
