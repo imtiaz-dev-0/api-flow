@@ -1,0 +1,17 @@
+node_modules/
+tests/
+coverage/
+docs/
+src/
+*.test.ts
+*.test.tsx
+*.config.ts
+*.config.js
+.eslintrc.json
+.prettierrc
+.husky/
+.github/
+tsconfig*.json
+vite.config.ts
+vitest.config.ts
+CONTRIBUTING.md

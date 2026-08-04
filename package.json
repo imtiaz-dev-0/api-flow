@@ -1,0 +1,155 @@
+{
+  "name": "api-flow",
+  "version": "0.1.0",
+  "description": "The easiest and most powerful API client for JavaScript and TypeScript applications",
+  "author": "api-flow contributors",
+  "license": "MIT",
+  "keywords": [
+    "api",
+    "http",
+    "client",
+    "fetch",
+    "axios",
+    "typescript",
+    "react",
+    "react-native",
+    "nextjs",
+    "vue",
+    "rest",
+    "authentication",
+    "retry",
+    "cache",
+    "interceptors"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/api-flow/api-flow.git"
+  },
+  "bugs": {
+    "url": "https://github.com/api-flow/api-flow/issues"
+  },
+  "homepage": "https://api-flow.dev",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./hooks": {
+      "import": {
+        "types": "./dist/hooks/index.d.ts",
+        "default": "./dist/hooks/index.js"
+      },
+      "require": {
+        "types": "./dist/hooks/index.d.cts",
+        "default": "./dist/hooks/index.cjs"
+      }
+    },
+    "./adapters/fetch": {
+      "import": {
+        "types": "./dist/adapters/fetch.d.ts",
+        "default": "./dist/adapters/fetch.js"
+      },
+      "require": {
+        "types": "./dist/adapters/fetch.d.cts",
+        "default": "./dist/adapters/fetch.cjs"
+      }
+    },
+    "./adapters/axios": {
+      "import": {
+        "types": "./dist/adapters/axios.d.ts",
+        "default": "./dist/adapters/axios.js"
+      },
+      "require": {
+        "types": "./dist/adapters/axios.d.cts",
+        "default": "./dist/adapters/axios.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "vite build && tsc -p tsconfig.build.json --emitDeclarationOnly",
+    "build:types": "tsc -p tsconfig.build.json --emitDeclarationOnly",
+    "dev": "vite build --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui",
+    "lint": "eslint src tests --ext .ts,.tsx",
+    "lint:fix": "eslint src tests --ext .ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\" \"tests/**/*.{ts,tsx}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx}\" \"tests/**/*.{ts,tsx}\"",
+    "typecheck": "tsc --noEmit",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "prepublishOnly": "pnpm build",
+    "release": "changeset publish",
+    "version": "changeset version"
+  },
+  "peerDependencies": {
+    "axios": ">=1.0.0",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "peerDependenciesMeta": {
+    "axios": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.1",
+    "@testing-library/react": "^14.1.2",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
+    "@vitest/coverage-v8": "^1.0.4",
+    "@vitest/ui": "^1.0.4",
+    "eslint": "^8.55.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.3",
+    "jsdom": "^23.0.1",
+    "lint-staged": "^15.2.0",
+    "msw": "^2.0.11",
+    "prettier": "^3.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.3.2",
+    "vite": "^5.0.8",
+    "vite-plugin-dts": "^3.6.4",
+    "vitepress": "^1.0.0-rc.31",
+    "vitest": "^1.0.4"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "sideEffects": false
+}
