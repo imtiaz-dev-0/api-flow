@@ -1,6 +1,6 @@
 {
   "name": "api-flow-client",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The easiest and most powerful API client for JavaScript and TypeScript applications",
   "author": "imtiaz-dev",
   "license": "MIT",
