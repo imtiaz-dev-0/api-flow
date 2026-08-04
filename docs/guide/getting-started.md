@@ -4,13 +4,13 @@
 
 ::: code-group
 ```sh [npm]
-npm install api-flow
+npm install api-flow-client
 ```
 ```sh [pnpm]
-pnpm add api-flow
+pnpm add api-flow-client
 ```
 ```sh [yarn]
-yarn add api-flow
+yarn add api-flow-client
 ```
 :::
 
@@ -24,7 +24,7 @@ yarn add api-flow
 ## Basic Usage
 
 ```typescript
-import { createApi } from 'api-flow'
+import { createApi } from 'api-flow-client'
 
 const api = createApi({
   baseURL: 'https://api.example.com',

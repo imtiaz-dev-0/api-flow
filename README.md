@@ -62,11 +62,11 @@
 ## Quick Start
 
 ```sh
-npm install api-flow
+npm install api-flow-client
 ```
 
 ```typescript
-import { createApi } from 'api-flow'
+import { createApi } from 'api-flow-client'
 
 const api = createApi({
   baseURL: 'https://api.example.com',
@@ -103,7 +103,7 @@ await api.delete('/users/1')
 ### React
 
 ```tsx
-import { useGet, useMutation } from 'api-flow/hooks'
+import { useGet, useMutation } from 'api-flow-client/hooks'
 import { api } from './api'
 
 function UserList() {
@@ -135,7 +135,7 @@ function CreateUser() {
 
 ```typescript
 // app/api/users/route.ts
-import { createServerSideApi, extractServerHeaders } from 'api-flow'
+import { createServerSideApi, extractServerHeaders } from 'api-flow-client'
 
 export async function GET(request: Request) {
   const api = createServerSideApi({
@@ -151,7 +151,7 @@ export async function GET(request: Request) {
 ### React Native
 
 ```typescript
-import { createApi } from 'api-flow'
+import { createApi } from 'api-flow-client'
 
 // React Native: uses fetch (built-in) — no window/navigator issues
 const api = createApi({
@@ -170,7 +170,7 @@ const api = createApi({
 ```typescript
 // composables/useApi.ts
 import { ref, onMounted, onUnmounted } from 'vue'
-import type { ApiClient } from 'api-flow'
+import type { ApiClient } from 'api-flow-client'
 
 export function useApiGet<T>(client: ApiClient, url: string) {
   const data = ref<T | null>(null)
@@ -199,7 +199,7 @@ export function useApiGet<T>(client: ApiClient, url: string) {
 ### Node.js
 
 ```typescript
-import { createApi } from 'api-flow'
+import { createApi } from 'api-flow-client'
 
 const api = createApi({
   baseURL: process.env.API_URL,
@@ -247,7 +247,7 @@ for await (const page of api.cursorPaginate<Post>('/feed')) {
 ### Plugins
 
 ```typescript
-import { definePlugin } from 'api-flow'
+import { definePlugin } from 'api-flow-client'
 
 const analyticsPlugin = definePlugin('analytics', (client) => {
   client.on('request:end', ({ url, method, status, duration }) => {

@@ -8,7 +8,7 @@ Create `lib/api.ts` to share one instance across client components:
 
 ```typescript
 // lib/api.ts
-import { createApi } from 'api-flow'
+import { createApi } from 'api-flow-client'
 
 export const api = createApi({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -39,7 +39,7 @@ export const api = createApi({
 // app/users/page.tsx (Client Component)
 'use client'
 
-import { useGet } from 'api-flow/hooks'
+import { useGet } from 'api-flow-client/hooks'
 import { api } from '@/lib/api'
 
 export default function UsersPage() {
@@ -58,7 +58,7 @@ In Server Components, call the API directly (no hooks):
 
 ```typescript
 // app/users/page.tsx (Server Component)
-import { createServerSideApi, extractServerHeaders } from 'api-flow'
+import { createServerSideApi, extractServerHeaders } from 'api-flow-client'
 import { headers } from 'next/headers'
 
 export default async function UsersPage() {
@@ -77,7 +77,7 @@ export default async function UsersPage() {
 
 ```typescript
 // app/api/users/route.ts
-import { createServerSideApi } from 'api-flow'
+import { createServerSideApi } from 'api-flow-client'
 
 export async function GET(request: Request) {
   const api = createServerSideApi({
@@ -96,7 +96,7 @@ export async function GET(request: Request) {
 
 ```typescript
 // pages/users.tsx
-import { createServerSideApi, extractServerHeaders } from 'api-flow'
+import { createServerSideApi, extractServerHeaders } from 'api-flow-client'
 import type { GetServerSideProps } from 'next'
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {

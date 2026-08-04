@@ -2,7 +2,7 @@
  * api-flow — The easiest and most powerful API client for JavaScript and TypeScript.
  *
  * @example
- * import { createApi } from 'api-flow'
+ * import { createApi } from 'api-flow-client'
  *
  * const api = createApi({
  *   baseURL: 'https://api.example.com',

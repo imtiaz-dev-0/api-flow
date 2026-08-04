@@ -5,11 +5,11 @@
  *   npm install axios
  *
  * Usage:
- *   import { createApi } from 'api-flow'
+ *   import { createApi } from 'api-flow-client'
  *   const api = createApi({ adapter: 'axios' })
  *
  * Or import explicitly:
- *   import { getAxiosAdapter } from 'api-flow/adapters/axios'
+ *   import { getAxiosAdapter } from 'api-flow-client/adapters/axios'
  */
 
 import type { Adapter, AdapterRequest, AdapterResponse, ApiConfig } from '../core/types.ts'

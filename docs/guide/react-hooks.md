@@ -7,7 +7,7 @@ api-flow provides first-class React hooks for data fetching and mutations. They 
 Hooks are a separate entry point — they're tree-shaken from non-React bundles:
 
 ```typescript
-import { useGet, useMutation, usePost } from 'api-flow/hooks'
+import { useGet, useMutation, usePost } from 'api-flow-client/hooks'
 ```
 
 ## `useGet<T>`
@@ -15,7 +15,7 @@ import { useGet, useMutation, usePost } from 'api-flow/hooks'
 Automatically fetches data on mount. Cancels the request when the component unmounts.
 
 ```tsx
-import { useGet } from 'api-flow/hooks'
+import { useGet } from 'api-flow-client/hooks'
 import { api } from './api' // your createApi() instance
 
 interface User {
@@ -86,7 +86,7 @@ function LazyData() {
 For POST, PUT, PATCH, and DELETE operations. Does **not** auto-execute — you call `mutate()`.
 
 ```tsx
-import { useMutation } from 'api-flow/hooks'
+import { useMutation } from 'api-flow-client/hooks'
 
 interface CreateUserInput {
   name: string
@@ -124,7 +124,7 @@ function CreateUserForm() {
 ## `usePost<T>` Convenience Hook
 
 ```tsx
-import { usePost } from 'api-flow/hooks'
+import { usePost } from 'api-flow-client/hooks'
 
 function LoginForm() {
   const { mutate: login, loading, error } = usePost<LoginResponse>(api, '/auth/login')
@@ -142,7 +142,7 @@ In Next.js App Router, hooks can only be used in Client Components:
 // components/UserList.tsx
 'use client'
 
-import { useGet } from 'api-flow/hooks'
+import { useGet } from 'api-flow-client/hooks'
 import { api } from '@/lib/api'
 
 export function UserList() {

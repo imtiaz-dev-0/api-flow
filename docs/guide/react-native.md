@@ -14,7 +14,7 @@ api-flow avoids all browser-only APIs:
 
 ```typescript
 // api.ts
-import { createApi } from 'api-flow'
+import { createApi } from 'api-flow-client'
 import * as SecureStore from 'expo-secure-store' // or react-native-keychain
 
 export const api = createApi({
@@ -81,7 +81,7 @@ export function UserList() {
 While api-flow ships React hooks via `api-flow/hooks`, they work in React Native since they only use `useState`, `useEffect`, and `useRef`:
 
 ```tsx
-import { useGet } from 'api-flow/hooks'
+import { useGet } from 'api-flow-client/hooks'
 import { api } from './api'
 
 function ProductList() {

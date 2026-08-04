@@ -1,10 +1,10 @@
 /**
  * React Hooks for api-flow
  *
- * Import from 'api-flow/hooks' to ensure hooks are tree-shaken from non-React bundles.
+ * Import from 'api-flow-client/hooks' to ensure hooks are tree-shaken from non-React bundles.
  *
  * @example
- * import { useGet, useMutation, usePost } from 'api-flow/hooks'
+ * import { useGet, useMutation, usePost } from 'api-flow-client/hooks'
  */
 
 export { useGet } from './useGet.ts'

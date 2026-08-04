@@ -18,7 +18,7 @@ interface Plugin {
 ### Using `definePlugin`
 
 ```typescript
-import { definePlugin } from 'api-flow'
+import { definePlugin } from 'api-flow-client'
 
 const timingPlugin = definePlugin('timing', (client) => {
   client.on('request:end', ({ url, duration, method }) => {
@@ -62,7 +62,7 @@ Plugins with duplicate names are silently ignored (installed only once).
 Logs network retry events:
 
 ```typescript
-import { createNetworkRetryPlugin } from 'api-flow'
+import { createNetworkRetryPlugin } from 'api-flow-client'
 api.use(createNetworkRetryPlugin(3))
 ```
 
@@ -71,7 +71,7 @@ api.use(createNetworkRetryPlugin(3))
 Logs token refresh events:
 
 ```typescript
-import { createAuthRefreshPlugin } from 'api-flow'
+import { createAuthRefreshPlugin } from 'api-flow-client'
 api.use(createAuthRefreshPlugin())
 ```
 

@@ -43,11 +43,11 @@ features:
 ## Quick Start
 
 ```sh
-npm install api-flow
+npm install api-flow-client
 ```
 
 ```typescript
-import { createApi } from 'api-flow'
+import { createApi } from 'api-flow-client'
 
 const api = createApi({
   baseURL: 'https://api.example.com',
