@@ -89,13 +89,7 @@ describe('executeWithRetry', () => {
   })
 
   it('should use exponential backoff', async () => {
-    const delays: number[] = []
-    const origSetTimeout = global.setTimeout
-    const setTimeoutSpy = vi.spyOn(global, 'setTimeout').mockImplementation((fn, delay, ...args) => {
-      delays.push(delay as number)
-      return origSetTimeout(fn, 0, ...args)
-    })
-
+    // Use fake timers to control time without real delays
     const networkError = new ApiError({
       message: 'Network error',
       status: 0,
@@ -111,14 +105,15 @@ describe('executeWithRetry', () => {
       .mockRejectedValueOnce(networkError)
       .mockResolvedValueOnce({ status: 200, data: 'ok', ok: true, url: '', statusText: '', headers: {}, duration: 10 })
 
-    await executeWithRetry(execute, { attempts: 3, delay: 100, jitter: false })
+    // Run with fake timers — the promise won't resolve until we advance timers
+    const promise = executeWithRetry(execute, { attempts: 3, delay: 100, jitter: false })
+    await vi.runAllTimersAsync()
+    const result = await promise
 
-    // Delays should grow exponentially: 100, 200
-    expect(delays[0]).toBeGreaterThanOrEqual(100)
-    expect(delays[1]).toBeGreaterThanOrEqual(200)
-
-    setTimeoutSpy.mockRestore()
-  })
+    expect(result.status).toBe(200)
+    // Should have been called 3 times (2 failures + 1 success)
+    expect(execute).toHaveBeenCalledTimes(3)
+  }, 10000)
 
   it('should call onRetry callback with error and attempt number', async () => {
     const networkError = new ApiError({

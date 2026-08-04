@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from 'vitest'
 import { http, HttpResponse } from 'msw'
 import { server } from '../setup.ts'
 import { createApi } from '../../src/index.ts'
+import { RequestQueue } from '../../src/queue/request-queue.ts'
 
 const BASE_URL = 'https://api.test.com'
 
@@ -69,8 +70,7 @@ describe('Interceptors', () => {
 })
 
 describe('Request Queue (Offline)', () => {
-  it('should queue requests when offline', () => {
-    const { RequestQueue } = require('../../src/queue/request-queue.ts')
+  it('should detect offline state', () => {
     const queue = new RequestQueue({ enabled: true, maxQueueSize: 5 })
 
     // Simulate offline
@@ -82,7 +82,6 @@ describe('Request Queue (Offline)', () => {
   })
 
   it('should reject when queue is full', async () => {
-    const { RequestQueue } = require('../../src/queue/request-queue.ts')
     const queue = new RequestQueue({ enabled: true, maxQueueSize: 2 })
 
     Object.defineProperty(navigator, 'onLine', { value: false, configurable: true })
