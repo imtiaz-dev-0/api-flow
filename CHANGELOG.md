@@ -1,5 +1,11 @@
 # api-flow
 
+## 1.1.1
+
+### Patch Changes
+
+- docs: fix all badge URLs and links to point to correct repo and package name (api-flow-client)
+
 ## 1.1.0
 
 ### Minor Changes
