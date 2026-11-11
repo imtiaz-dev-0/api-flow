@@ -104,3 +104,48 @@ export function usePost<T = unknown, B = unknown>(
 ): UseMutationResult<T, B> {
   return useMutation<T, B>(client, 'POST', url, options)
 }
+
+/**
+ * Convenience hook for PUT requests.
+ *
+ * @example
+ * const { mutate, loading } = usePut<User>(api, '/users/1')
+ * await mutate({ name: 'Alice' })
+ */
+export function usePut<T = unknown, B = unknown>(
+  client: ApiClient,
+  url: string,
+  options?: RequestOptions,
+): UseMutationResult<T, B> {
+  return useMutation<T, B>(client, 'PUT', url, options)
+}
+
+/**
+ * Convenience hook for PATCH requests.
+ *
+ * @example
+ * const { mutate, loading } = usePatch<User>(api, '/users/1')
+ * await mutate({ name: 'Alice' })
+ */
+export function usePatch<T = unknown, B = unknown>(
+  client: ApiClient,
+  url: string,
+  options?: RequestOptions,
+): UseMutationResult<T, B> {
+  return useMutation<T, B>(client, 'PATCH', url, options)
+}
+
+/**
+ * Convenience hook for DELETE requests.
+ *
+ * @example
+ * const { mutate, loading } = useDelete(api, '/users/1')
+ * await mutate()
+ */
+export function useDelete<T = unknown>(
+  client: ApiClient,
+  url: string,
+  options?: RequestOptions,
+): UseMutationResult<T, never> {
+  return useMutation<T, never>(client, 'DELETE', url, options)
+}

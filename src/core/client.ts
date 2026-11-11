@@ -81,6 +81,14 @@ export class ApiClient implements ApiClientInterface {
     return this.request<T>('DELETE', url, undefined, options)
   }
 
+  async head(url: string, options?: RequestOptions): Promise<AdapterResponse<null>> {
+    return this.request<null>('HEAD', url, undefined, options)
+  }
+
+  async options<T = unknown>(url: string, options?: RequestOptions): Promise<AdapterResponse<T>> {
+    return this.request<T>('OPTIONS', url, undefined, options)
+  }
+
   // ─── File Upload ────────────────────────────────────────────
 
   async upload<T = unknown>(
@@ -178,6 +186,17 @@ export class ApiClient implements ApiClientInterface {
     } else {
       this.cache.clear()
     }
+  }
+
+  /**
+   * Invalidates all cache entries whose keys match the given pattern.
+   * Returns the number of entries removed.
+   *
+   * @example
+   * api.invalidateCachePattern(/\/users\//)  // clears all user-related cache
+   */
+  invalidateCachePattern(pattern: RegExp): number {
+    return this.cache.invalidatePattern(pattern)
   }
 
   // ─── Core Request Executor ──────────────────────────────────

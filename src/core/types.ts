@@ -361,10 +361,14 @@ export interface ApiClientInterface {
   put<T = unknown>(url: string, body?: unknown, options?: RequestOptions): Promise<AdapterResponse<T>>
   patch<T = unknown>(url: string, body?: unknown, options?: RequestOptions): Promise<AdapterResponse<T>>
   delete<T = unknown>(url: string, options?: RequestOptions): Promise<AdapterResponse<T>>
+  head(url: string, options?: RequestOptions): Promise<AdapterResponse<null>>
+  options<T = unknown>(url: string, options?: RequestOptions): Promise<AdapterResponse<T>>
   cancel(id: string): void
+  cancelAll(): void
   use(plugin: Plugin): this
   getMetrics(): MetricsEntry[]
-  clearCache(): void
+  clearCache(url?: string): void
+  invalidateCachePattern(pattern: RegExp): number
   clearMetrics(): void
   on<K extends keyof EventMap>(event: K, listener: (data: EventMap[K]) => void): () => void
   off<K extends keyof EventMap>(event: K, listener: (data: EventMap[K]) => void): void
