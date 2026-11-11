@@ -1,18 +1,17 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/api-flow/api-flow/main/docs/public/logo.svg" width="80" alt="api-flow logo" />
+<img src="https://raw.githubusercontent.com/imtiaz-dev-0/api-flow/main/docs/public/logo.svg" width="80" alt="api-flow logo" />
 
 # api-flow
 
 **The easiest and most powerful API client for JavaScript and TypeScript.**
 
-[![npm version](https://img.shields.io/npm/v/api-flow?color=4f46e5&style=flat-square)](https://npmjs.com/package/api-flow)
-[![npm downloads](https://img.shields.io/npm/dm/api-flow?color=4f46e5&style=flat-square)](https://npmjs.com/package/api-flow)
-[![CI](https://img.shields.io/github/actions/workflow/status/api-flow/api-flow/ci.yml?label=CI&style=flat-square)](https://github.com/api-flow/api-flow/actions)
-[![Coverage](https://img.shields.io/codecov/c/github/api-flow/api-flow?style=flat-square)](https://codecov.io/gh/api-flow/api-flow)
+[![npm version](https://img.shields.io/npm/v/api-flow-client?color=4f46e5&style=flat-square)](https://npmjs.com/package/api-flow-client)
+[![npm downloads](https://img.shields.io/npm/dm/api-flow-client?color=4f46e5&style=flat-square)](https://npmjs.com/package/api-flow-client)
+[![CI](https://img.shields.io/github/actions/workflow/status/imtiaz-dev-0/api-flow/ci.yml?label=CI&style=flat-square)](https://github.com/imtiaz-dev-0/api-flow/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-4f46e5?style=flat-square)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178c6?style=flat-square)](https://typescriptlang.org)
-[![Bundle Size](https://img.shields.io/bundlephobia/minzip/api-flow?label=minzipped&style=flat-square)](https://bundlephobia.com/package/api-flow)
+[![Bundle Size](https://img.shields.io/bundlephobia/minzip/api-flow-client?label=minzipped&style=flat-square)](https://bundlephobia.com/package/api-flow-client)
 
 [Documentation](https://api-flow.dev) · [Quick Start](#quick-start) · [API Reference](#api-reference) · [Examples](#examples) · [Contributing](#contributing)
 
@@ -397,7 +396,7 @@ We welcome contributions! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for gui
 ### Development Setup
 
 ```sh
-git clone https://github.com/api-flow/api-flow.git
+git clone https://github.com/imtiaz-dev-0/api-flow.git
 cd api-flow
 pnpm install
 
