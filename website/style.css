@@ -10,7 +10,7 @@
   --bg-surface: #0f172a;
   --bg-surface-elevated: #1e293b;
   --bg-card: rgba(15, 23, 42, 0.75);
-  --bg-card-hover: rgba(30, 41, 59, 0.85);
+  --bg-card-hover: rgba(30, 41, 59, 0.85); 
   
   --border-subtle: rgba(255, 255, 255, 0.08);
   --border-highlight: rgba(99, 102, 241, 0.3);
