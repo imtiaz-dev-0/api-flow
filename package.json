@@ -1,6 +1,6 @@
 {
   "name": "api-flow-client",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "The easiest and most powerful API client for JavaScript and TypeScript applications",
   "author": "imtiaz-dev",
   "license": "MIT",
@@ -28,7 +28,7 @@
   "bugs": {
     "url": "https://github.com/imtiaz-dev-0/api-flow/issues"
   },
-  "homepage": "https://api-flow.dev",
+  "homepage": "https://api-flow-client.online",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

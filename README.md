@@ -13,7 +13,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178c6?style=flat-square)](https://typescriptlang.org)
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/api-flow-client?label=minzipped&style=flat-square)](https://bundlephobia.com/package/api-flow-client)
 
-[Documentation](https://api-flow.dev) · [Quick Start](#quick-start) · [API Reference](#api-reference) · [Examples](#examples) · [Contributing](#contributing)
+[Website & Docs](https://api-flow-client.online) · [Quick Start](#quick-start) · [API Reference](#api-reference) · [Examples](#examples) · [Contributing](#contributing)
 
 <br/>
 

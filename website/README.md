@@ -67,3 +67,4 @@ In cPanel, make sure to enable **AutoSSL / Let's Encrypt** under **SSL/TLS Statu
 The website includes pre-configured donation links pointing directly to:
 - **`https://paypal.me/imtiaz579`**
 - Preset tiers: $5, $15, $50, and custom amounts.
+

@@ -1,5 +1,11 @@
 # api-flow
 
+## 1.1.2
+
+### Patch Changes
+
+- docs: update homepage link to https://api-flow-client.online in package.json and README
+
 ## 1.1.1
 
 ### Patch Changes
