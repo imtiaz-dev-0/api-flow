@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initial greeting log
   if (simOutput) {
-    appendLog('info', '<strong>[api-flow v1.1.1]</strong> Client initialized. Ready to execute requests.')
+    appendLog('info', '<strong>[api-flow v1.1.2]</strong> Client initialized. Ready to execute requests.')
   }
 
   if (clearSimLog && simOutput) {
