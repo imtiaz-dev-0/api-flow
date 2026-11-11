@@ -16,6 +16,12 @@
 
 [Documentation](https://api-flow.dev) · [Quick Start](#quick-start) · [API Reference](#api-reference) · [Examples](#examples) · [Contributing](#contributing)
 
+<br/>
+
+[![PayPal](https://img.shields.io/badge/Donate-PayPal-00457C?style=flat-square&logo=paypal&logoColor=white)](https://paypal.me/imtiaz579)
+
+> If api-flow saves you time, consider buying me a coffee ☕
+
 </div>
 
 ---
