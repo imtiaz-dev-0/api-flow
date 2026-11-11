@@ -10,3 +10,4 @@ coverage/
 .env.*.local
 docs/.vitepress/cache
 docs/.vitepress/dist
+*.zip

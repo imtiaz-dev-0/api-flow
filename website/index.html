@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>api-flow-client — The Easiest & Most Powerful API Client for JS & TS</title>
+  
+  <meta name="description" content="Production-ready API client for JavaScript and TypeScript. Zero dependencies, 8.5 kB. Auto auth token refresh mutex, LRU caching, exponential retry, React hooks, and SSR support.">
+  <meta name="keywords" content="api-flow-client, http client, fetch, axios, typescript, react hooks, auth refresh, retry backoff, cache ttl, ssr">
+  <meta name="author" content="Imtiaz (imtiaz-dev-0)">
+  
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://api-flow-client.online/">
+  <meta property="og:title" content="api-flow-client — The Easiest & Most Powerful API Client">
+  <meta property="og:description" content="Zero dependencies, 8.5 kB. Auto auth token refresh mutex, smart LRU cache, retry with jitter, and React hooks out of the box.">
+  <meta property="og:image" content="https://api-flow-client.online/assets/logo.svg">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="api-flow-client — API clients, simplified">
+  <meta name="twitter:description" content="The easiest and most powerful HTTP client for JavaScript and TypeScript.">
+  <meta name="twitter:image" content="https://api-flow-client.online/assets/logo.svg">
+  
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="canonical" href="https://api-flow-client.online/">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Background Glow & Grid Overlay -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="bg-grid-pattern"></div>
+
+  <!-- Announcement Bar -->
+  <aside class="announcement-bar" aria-label="Announcement">
+    <div class="container announcement-content">
+      <span class="badge-pill">v1.1.1 Live on npm</span>
+      <span class="announcement-text">
+        🎉 <strong>api-flow-client v1.1.1 is here!</strong> Full HTTP suite (HEAD/OPTIONS), React hooks, and regex cache invalidation.
+      </span>
+      <a href="#quickstart" class="announcement-link">Get Started &rarr;</a>
+    </div>
+  </aside>
+
+  <!-- Navigation -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#" class="nav-logo" aria-label="api-flow-client homepage">
+        <img src="assets/logo.svg" alt="api-flow-client Logo" width="36" height="36" class="logo-img">
+        <span class="logo-title">api-flow<span class="logo-accent">-client</span></span>
+        <span class="version-tag">v1.1.1</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Main Navigation">
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#simulator" class="nav-link">Live Playground</a>
+        <a href="#examples" class="nav-link">Code Examples</a>
+        <a href="#comparison" class="nav-link">Comparison</a>
+        <a href="#donate" class="nav-link nav-link-highlight">
+          <svg class="heart-icon" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+          Donate
+        </a>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Theme Toggle -->
+        <button id="themeToggle" class="btn-icon" aria-label="Toggle dark/light mode" title="Toggle theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <!-- GitHub -->
+        <a href="https://github.com/imtiaz-dev-0/api-flow" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" aria-label="GitHub Repository">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+          <span class="btn-text">GitHub</span>
+        </a>
+
+        <!-- Donate direct CTA -->
+        <a href="https://paypal.me/imtiaz579" target="_blank" rel="noopener noreferrer" class="btn btn-paypal btn-sm">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+            <path d="M20.067 8.478c.492.315.844.82 1.03 1.474.37 1.306.05 2.875-.95 4.664-1.393 2.503-3.69 3.864-6.83 4.05l-.32 1.724a.63.63 0 0 1-.62.51h-2.91a.48.48 0 0 1-.47-.56l1.79-9.59a.78.78 0 0 1 .77-.64h4.48c1.78 0 3.03.4 3.73 1.25l.32.118z"/>
+          </svg>
+          <span>Donate</span>
+        </a>
+
+        <!-- Mobile hamburger -->
+        <button id="mobileMenuBtn" class="mobile-toggle" aria-label="Toggle menu" aria-expanded="false">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero-section" id="hero">
+      <div class="container hero-container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="pulse-dot"></span>
+            Zero Dependencies &bull; 8.5 kB Min+Gzip &bull; 100% TypeScript
+          </div>
+          
+          <h1 class="hero-title">
+            The Easiest & Most Powerful <br>
+            <span class="gradient-text">API Client</span> for JS & TS.
+          </h1>
+          
+          <p class="hero-description">
+            Tired of reinventing token refresh loops, cache TTLs, and retry backoffs for fetch and axios? 
+            <strong>api-flow-client</strong> gives you seamless 401 mutex queuing, smart LRU caching, auto-retry with jitter, 
+            and ready-to-use React hooks in one cohesive, featherweight package.
+          </p>
+
+          <!-- Quick Copy Install Box -->
+          <div class="install-card" id="quickstart">
+            <div class="install-tabs" role="tablist">
+              <button class="install-tab active" data-pkg="npm" role="tab" aria-selected="true">npm</button>
+              <button class="install-tab" data-pkg="pnpm" role="tab" aria-selected="false">pnpm</button>
+              <button class="install-tab" data-pkg="yarn" role="tab" aria-selected="false">yarn</button>
+              <button class="install-tab" data-pkg="bun" role="tab" aria-selected="false">bun</button>
+            </div>
+            <div class="install-command">
+              <code id="installCode">npm install api-flow-client</code>
+              <button id="copyInstallBtn" class="btn-copy" aria-label="Copy install command" title="Copy to clipboard">
+                <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span class="copy-tooltip">Copied!</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Hero CTAs -->
+          <div class="hero-actions">
+            <a href="#examples" class="btn btn-primary btn-lg">
+              <span>View Code Examples</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+            <a href="#simulator" class="btn btn-secondary btn-lg">
+              <span>Try Live Simulator</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </a>
+            <a href="https://paypal.me/imtiaz579" target="_blank" rel="noopener noreferrer" class="btn btn-paypal btn-lg">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+              <span>Support Creator</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Code Preview / Window -->
+        <div class="hero-preview">
+          <div class="code-window">
+            <div class="window-header">
+              <div class="window-controls">
+                <span class="dot dot-red"></span>
+                <span class="dot dot-yellow"></span>
+                <span class="dot dot-green"></span>
+              </div>
+              <div class="window-title">api.ts — Universal Setup</div>
+              <div class="window-badge">TypeScript 5.0+</div>
+            </div>
+            <div class="window-body">
+              <pre><code><span class="token-keyword">import</span> { <span class="token-function">createApi</span> } <span class="token-keyword">from</span> <span class="token-string">'api-flow-client'</span>
+
+<span class="token-comment">// 1. Single powerful client instance</span>
+<span class="token-keyword">export const</span> api = <span class="token-function">createApi</span>({
+  baseURL: <span class="token-string">'https://api.example.com/v1'</span>,
+
+  <span class="token-comment">// Mutex auth refresh — queues concurrent 401s automatically</span>
+  auth: {
+    getAccessToken: () =&gt; localStorage.<span class="token-function">getItem</span>(<span class="token-string">'token'</span>),
+    refresh: <span class="token-keyword">async</span> (refreshToken) =&gt; {
+      <span class="token-keyword">const</span> res = <span class="token-keyword">await</span> fetch(<span class="token-string">'/auth/refresh'</span>, { method: <span class="token-string">'POST'</span> })
+      <span class="token-keyword">const</span> { token } = <span class="token-keyword">await</span> res.<span class="token-function">json</span>()
+      <span class="token-keyword">return</span> token
+    }
+  },
+
+  <span class="token-comment">// In-memory LRU cache + TTL expiration</span>
+  cache: { enabled: <span class="token-boolean">true</span>, ttl: <span class="token-number">300_000</span> },
+
+  <span class="token-comment">// Exponential retry with randomized jitter</span>
+  retry: { attempts: <span class="token-number">3</span>, jitter: <span class="token-boolean">true</span> }
+})
+
+<span class="token-comment">// 2. Fully typed & deduped requests</span>
+<span class="token-keyword">const</span> users = <span class="token-keyword">await</span> api.<span class="token-function">get</span>&lt;<span class="token-type">User[]</span>&gt;(<span class="token-string">'/users'</span>)
+console.<span class="token-function">log</span>(users.data, users.duration)</code></pre>
+            </div>
+            <div class="window-footer">
+              <div class="footer-stat"><span class="badge-tag">Zero Config</span> Works out of the box</div>
+              <div class="footer-stat"><span class="badge-tag">Universal</span> Node.js &bull; Browser &bull; React Native</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Metrics Ribbon -->
+    <section class="metrics-ribbon">
+      <div class="container metrics-container">
+        <div class="metric-card">
+          <div class="metric-value">0</div>
+          <div class="metric-label">External Dependencies</div>
+          <div class="metric-desc">Native Fetch with zero bloat</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">8.5 <span class="metric-unit">kB</span></div>
+          <div class="metric-label">Minified + Gzipped</div>
+          <div class="metric-desc">Featherweight bundle impact</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">100%</div>
+          <div class="metric-label">Type-Safe TypeScript</div>
+          <div class="metric-desc">Full generics for requests & data</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">94/94</div>
+          <div class="metric-label">Passing Unit Tests</div>
+          <div class="metric-desc">Battle-tested rock solid reliability</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Everything Included</span>
+          <h2 class="section-title">Built for Modern Apps. No Extra Libraries Needed.</h2>
+          <p class="section-subtitle">
+            Say goodbye to pasting custom 401 interceptors, retry loops, and cache maps into every new project.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <!-- Feature 1 -->
+          <div class="feature-card">
+            <div class="feature-icon-wrapper icon-auth">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </div>
+            <h3 class="feature-title">Auth & Token Refresh Mutex</h3>
+            <p class="feature-text">
+              When 5 requests hit a 401 expired token at once, api-flow halts them, executes <strong>exactly one</strong> refresh call, and replays all 5 requests automatically with the new token. Zero race conditions.
+            </p>
+            <div class="feature-tag">No Thundering Herd</div>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="feature-card">
+            <div class="feature-icon-wrapper icon-cache">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+            </div>
+            <h3 class="feature-title">Smart Memory LRU Cache</h3>
+            <p class="feature-text">
+              Zero-config in-memory caching with TTL expiration, in-flight request deduplication, and regex pattern invalidation via <code>api.invalidateCachePattern()</code>.
+            </p>
+            <div class="feature-tag">0ms Cache Hits</div>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="feature-card">
+            <div class="feature-icon-wrapper icon-retry">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <polyline points="1 20 1 14 7 14"></polyline>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+              </svg>
+            </div>
+            <h3 class="feature-title">Auto-Retry with Jitter</h3>
+            <p class="feature-text">
+              Configurable exponential backoff retries for network drops, timeouts, 429, and 5xx errors. Full jitter randomizes delays to protect backend services from retry spikes.
+            </p>
+            <div class="feature-tag">Reliable Networking</div>
+          </div>
+
+          <!-- Feature 4 -->
+          <div class="feature-card">
+            <div class="feature-icon-wrapper icon-react">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(45 12 12)"></ellipse>
+                <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-45 12 12)"></ellipse>
+                <circle cx="12" cy="12" r="2"></circle>
+              </svg>
+            </div>
+            <h3 class="feature-title">React Hooks Out of the Box</h3>
+            <p class="feature-text">
+              Import from <code>api-flow-client/hooks</code>: <code>useGet</code>, <code>usePost</code>, <code>usePut</code>, <code>usePatch</code>, <code>useDelete</code>, and <code>useMutation</code> with auto-cancellation on component unmount.
+            </p>
+            <div class="feature-tag">Tree-Shakeable Hooks</div>
+          </div>
+
+          <!-- Feature 5 -->
+          <div class="feature-card">
+            <div class="feature-icon-wrapper icon-ssr">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+            <h3 class="feature-title">Next.js & SSR First-Class</h3>
+            <p class="feature-text">
+              Use <code>createServerSideApi</code> and <code>extractServerHeaders</code> in Next.js Server Components, App Router, Pages router, Nuxt, and Express with seamless cookie forwarding.
+            </p>
+            <div class="feature-tag">App Router Ready</div>
+          </div>
+
+          <!-- Feature 6 -->
+          <div class="feature-card">
+            <div class="feature-icon-wrapper icon-adapter">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+            </div>
+            <h3 class="feature-title">Pluggable Adapters</h3>
+            <p class="feature-text">
+              Defaults to native zero-dependency <code>fetch</code>. Already have an existing Axios project? Just pass <code>adapter: 'axios'</code> to reuse your established Axios stack without rewrite.
+            </p>
+            <div class="feature-tag">Fetch + Axios</div>
+          </div>
+
+          <!-- Feature 7 -->
+          <div class="feature-card">
+            <div class="feature-icon-wrapper icon-upload">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+            </div>
+            <h3 class="feature-title">File Upload & Download Progress</h3>
+            <p class="feature-text">
+              Native progress event tracking with percentage loaded and byte counters via <code>api.upload()</code> and <code>api.download()</code>.
+            </p>
+            <div class="feature-tag">Progress Events</div>
+          </div>
+
+          <!-- Feature 8 -->
+          <div class="feature-card">
+            <div class="feature-icon-wrapper icon-page">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+              </svg>
+            </div>
+            <h3 class="feature-title">Async Pagination Iterators</h3>
+            <p class="feature-text">
+              Effortlessly paginate datasets with <code>for await (const page of api.paginate('/items'))</code> supporting page-based and cursor-based APIs out of the box.
+            </p>
+            <div class="feature-tag">Async Iterators</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Live Simulator Section -->
+    <section class="simulator-section" id="simulator">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Interactive Demo</span>
+          <h2 class="section-title">See api-flow-client in Action</h2>
+          <p class="section-subtitle">
+            Click the buttons below to simulate realistic network scenarios and inspect how api-flow handles them.
+          </p>
+        </div>
+
+        <div class="simulator-wrapper">
+          <div class="simulator-controls">
+            <button class="sim-btn active" data-action="get">
+              <span class="sim-btn-icon">⚡</span>
+              <span class="sim-btn-content">
+                <strong>Standard GET</strong>
+                <small>Fresh network fetch (180ms)</small>
+              </span>
+            </button>
+
+            <button class="sim-btn" data-action="cache">
+              <span class="sim-btn-icon">💾</span>
+              <span class="sim-btn-content">
+                <strong>Cache Hit</strong>
+                <small>Instant memory LRU response (0ms)</small>
+              </span>
+            </button>
+
+            <button class="sim-btn" data-action="auth">
+              <span class="sim-btn-icon">🔐</span>
+              <span class="sim-btn-content">
+                <strong>401 Auth Mutex</strong>
+                <small>3 calls &rarr; 1 refresh &rarr; 3 replayed</small>
+              </span>
+            </button>
+
+            <button class="sim-btn" data-action="retry">
+              <span class="sim-btn-icon">🔄</span>
+              <span class="sim-btn-content">
+                <strong>503 Retry with Jitter</strong>
+                <small>Exponential backoff + recovery</small>
+              </span>
+            </button>
+          </div>
+
+          <div class="simulator-terminal">
+            <div class="terminal-header">
+              <div class="terminal-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="terminal-title">live-debugger.log</div>
+              <button id="clearSimLog" class="btn-terminal-clear">Clear</button>
+            </div>
+            <div class="terminal-output" id="simOutput" aria-live="polite">
+              <!-- Logs populated by script.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Code Showcase Tabs -->
+    <section class="examples-section" id="examples">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Code Walkthrough</span>
+          <h2 class="section-title">Clean, Expressive, and Fully Typed</h2>
+          <p class="section-subtitle">
+            Explore ready-to-paste snippets for common production patterns.
+          </p>
+        </div>
+
+        <div class="code-showcase-card">
+          <div class="code-tabs-header">
+            <button class="code-tab active" data-tab="quickstart">Quick Start</button>
+            <button class="code-tab" data-tab="auth">Auth & Refresh</button>
+            <button class="code-tab" data-tab="cache">Caching & Regex</button>
+            <button class="code-tab" data-tab="hooks">React Hooks</button>
+            <button class="code-tab" data-tab="ssr">Next.js & SSR</button>
+            <button class="code-tab" data-tab="pagination">Pagination</button>
+          </div>
+
+          <div class="code-tabs-content">
+            <!-- Tab 1: Quickstart -->
+            <div class="code-panel active" id="tab-quickstart">
+              <pre><code><span class="token-keyword">import</span> { <span class="token-function">createApi</span> } <span class="token-keyword">from</span> <span class="token-string">'api-flow-client'</span>
+
+<span class="token-keyword">interface</span> <span class="token-type">User</span> {
+  id: <span class="token-type">number</span>
+  name: <span class="token-type">string</span>
+  email: <span class="token-type">string</span>
+}
+
+<span class="token-keyword">const</span> api = <span class="token-function">createApi</span>({
+  baseURL: <span class="token-string">'https://api.example.com'</span>,
+  timeout: <span class="token-number">10_000</span>
+})
+
+<span class="token-comment">// GET with generics</span>
+<span class="token-keyword">const</span> res = <span class="token-keyword">await</span> api.<span class="token-function">get</span>&lt;<span class="token-type">User[]</span>&gt;(<span class="token-string">'/users'</span>)
+console.<span class="token-function">log</span>(res.data[<span class="token-number">0</span>].name) <span class="token-comment">// Type-safe User</span>
+
+<span class="token-comment">// Full HTTP suite</span>
+<span class="token-keyword">await</span> api.<span class="token-function">post</span>(<span class="token-string">'/users'</span>, { name: <span class="token-string">'Alex'</span>, email: <span class="token-string">'alex@dev.com'</span> })
+<span class="token-keyword">await</span> api.<span class="token-function">put</span>(<span class="token-string">'/users/1'</span>, { name: <span class="token-string">'Alex Updated'</span> })
+<span class="token-keyword">await</span> api.<span class="token-function">patch</span>(<span class="token-string">'/users/1'</span>, { email: <span class="token-string">'new@dev.com'</span> })
+<span class="token-keyword">await</span> api.<span class="token-function">delete</span>(<span class="token-string">'/users/1'</span>)
+<span class="token-keyword">await</span> api.<span class="token-function">head</span>(<span class="token-string">'/users/1'</span>)
+<span class="token-keyword">await</span> api.<span class="token-function">options</span>(<span class="token-string">'/users'</span>)</code></pre>
+            </div>
+
+            <!-- Tab 2: Auth -->
+            <div class="code-panel" id="tab-auth">
+              <pre><code><span class="token-keyword">import</span> { <span class="token-function">createApi</span> } <span class="token-keyword">from</span> <span class="token-string">'api-flow-client'</span>
+
+<span class="token-keyword">const</span> api = <span class="token-function">createApi</span>({
+  baseURL: <span class="token-string">'https://api.example.com'</span>,
+  auth: {
+    <span class="token-comment">// Injects "Authorization: Bearer &lt;token&gt;" automatically</span>
+    getAccessToken: () =&gt; localStorage.<span class="token-function">getItem</span>(<span class="token-string">'access_token'</span>),
+    getRefreshToken: () =&gt; localStorage.<span class="token-function">getItem</span>(<span class="token-string">'refresh_token'</span>),
+    
+    <span class="token-comment">// Called ONCE when any request receives 401</span>
+    refresh: <span class="token-keyword">async</span> (refreshToken) =&gt; {
+      <span class="token-keyword">const</span> response = <span class="token-keyword">await</span> fetch(<span class="token-string">'https://api.example.com/auth/refresh'</span>, {
+        method: <span class="token-string">'POST'</span>,
+        headers: { <span class="token-string">'Content-Type'</span>: <span class="token-string">'application/json'</span> },
+        body: JSON.<span class="token-function">stringify</span>({ refreshToken })
+      })
+      <span class="token-keyword">const</span> data = <span class="token-keyword">await</span> response.<span class="token-function">json</span>()
+      localStorage.<span class="token-function">setItem</span>(<span class="token-string">'access_token'</span>, data.accessToken)
+      <span class="token-keyword">return</span> data.accessToken
+    }
+  }
+})</code></pre>
+            </div>
+
+            <!-- Tab 3: Cache -->
+            <div class="code-panel" id="tab-cache">
+              <pre><code><span class="token-keyword">import</span> { <span class="token-function">createApi</span> } <span class="token-keyword">from</span> <span class="token-string">'api-flow-client'</span>
+
+<span class="token-keyword">const</span> api = <span class="token-function">createApi</span>({
+  baseURL: <span class="token-string">'https://api.example.com'</span>,
+  cache: {
+    enabled: <span class="token-boolean">true</span>,
+    ttl: <span class="token-number">5</span> * <span class="token-number">60</span> * <span class="token-number">1000</span>, <span class="token-comment">// 5 minutes TTL</span>
+    maxSize: <span class="token-number">150</span>         <span class="token-comment">// LRU limit</span>
+  }
+})
+
+<span class="token-comment">// 1. First call fetches over network</span>
+<span class="token-keyword">const</span> u1 = <span class="token-keyword">await</span> api.<span class="token-function">get</span>(<span class="token-string">'/users'</span>)
+
+<span class="token-comment">// 2. Second call returns from memory in 0ms</span>
+<span class="token-keyword">const</span> u2 = <span class="token-keyword">await</span> api.<span class="token-function">get</span>(<span class="token-string">'/users'</span>)
+
+<span class="token-comment">// 3. Invalidate specific URL</span>
+api.<span class="token-function">clearCache</span>(<span class="token-string">'/users'</span>)
+
+<span class="token-comment">// 4. Regex pattern bulk invalidation (NEW in v1.1.0)</span>
+api.<span class="token-function">invalidateCachePattern</span>(<span class="token-string">/\/users\//</span>)</code></pre>
+            </div>
+
+            <!-- Tab 4: React Hooks -->
+            <div class="code-panel" id="tab-hooks">
+              <pre><code><span class="token-keyword">import</span> React <span class="token-keyword">from</span> <span class="token-string">'react'</span>
+<span class="token-keyword">import</span> { api } <span class="token-keyword">from</span> <span class="token-string">'./api'</span>
+<span class="token-keyword">import</span> { <span class="token-function">useGet</span>, <span class="token-function">usePost</span>, <span class="token-function">useDelete</span> } <span class="token-keyword">from</span> <span class="token-string">'api-flow-client/hooks'</span>
+
+<span class="token-keyword">export function</span> <span class="token-function">UserProfile</span>() {
+  <span class="token-comment">// Auto-fetches on mount, cancels on unmount</span>
+  <span class="token-keyword">const</span> { data, loading, error, refetch } = <span class="token-function">useGet</span>&lt;<span class="token-type">User</span>&gt;(api, <span class="token-string">'/profile'</span>)
+
+  <span class="token-comment">// Mutation hooks for updates</span>
+  <span class="token-keyword">const</span> { mutate: updateProfile, loading: saving } = <span class="token-function">usePost</span>(api, <span class="token-string">'/profile'</span>)
+  <span class="token-keyword">const</span> { mutate: deleteAccount } = <span class="token-function">useDelete</span>(api, <span class="token-string">'/profile'</span>)
+
+  <span class="token-keyword">if</span> (loading) <span class="token-keyword">return</span> &lt;<span class="token-type">div</span>&gt;Loading user profile...&lt;/<span class="token-type">div</span>&gt;
+  <span class="token-keyword">if</span> (error) <span class="token-keyword">return</span> &lt;<span class="token-type">div</span>&gt;Error: {error.message}&lt;/<span class="token-type">div</span>&gt;
+
+  <span class="token-keyword">return</span> (
+    &lt;<span class="token-type">div</span>&gt;
+      &lt;<span class="token-type">h1</span>&gt;{data?.name}&lt;/<span class="token-type">h1</span>&gt;
+      &lt;<span class="token-type">button</span> onClick={() =&gt; <span class="token-function">updateProfile</span>({ name: <span class="token-string">'New Name'</span> })}&gt;Update&lt;/<span class="token-type">button</span>&gt;
+      &lt;<span class="token-type">button</span> onClick={() =&gt; <span class="token-function">refetch</span>()}&gt;Refresh&lt;/<span class="token-type">button</span>&gt;
+    &lt;/<span class="token-type">div</span>&gt;
+  )
+}</code></pre>
+            </div>
+
+            <!-- Tab 5: SSR -->
+            <div class="code-panel" id="tab-ssr">
+              <pre><code><span class="token-comment">// app/users/page.tsx (Next.js App Router / SSR)</span>
+<span class="token-keyword">import</span> { <span class="token-function">createServerSideApi</span>, <span class="token-function">extractServerHeaders</span> } <span class="token-keyword">from</span> <span class="token-string">'api-flow-client'</span>
+<span class="token-keyword">import</span> { headers } <span class="token-keyword">from</span> <span class="token-string">'next/headers'</span>
+
+<span class="token-keyword">export default async function</span> <span class="token-function">UsersPage</span>() {
+  <span class="token-keyword">const</span> incomingHeaders = <span class="token-keyword">await</span> <span class="token-function">headers</span>()
+  
+  <span class="token-comment">// Forwards auth cookies &amp; IP transparently</span>
+  <span class="token-keyword">const</span> api = <span class="token-function">createServerSideApi</span>({
+    baseURL: process.env.<span class="token-type">INTERNAL_API_URL</span>,
+    headers: <span class="token-function">extractServerHeaders</span>({ headers: incomingHeaders })
+  })
+
+  <span class="token-keyword">const</span> response = <span class="token-keyword">await</span> api.<span class="token-function">get</span>&lt;<span class="token-type">User[]</span>&gt;(<span class="token-string">'/users'</span>)
+
+  <span class="token-keyword">return</span> (
+    &lt;<span class="token-type">main</span>&gt;
+      &lt;<span class="token-type">h1</span>&gt;Server-Rendered Users ({response.data.length})&lt;/<span class="token-type">h1</span>&gt;
+    &lt;/<span class="token-type">main</span>&gt;
+  )
+}</code></pre>
+            </div>
+
+            <!-- Tab 6: Pagination -->
+            <div class="code-panel" id="tab-pagination">
+              <pre><code><span class="token-keyword">import</span> { api } <span class="token-keyword">from</span> <span class="token-string">'./api'</span>
+
+<span class="token-comment">// 1. Page-based Async Iterator</span>
+<span class="token-keyword">for await</span> (<span class="token-keyword">const</span> page <span class="token-keyword">of</span> api.<span class="token-function">paginate</span>&lt;<span class="token-type">User</span>&gt;(<span class="token-string">'/users'</span>, { limit: <span class="token-number">25</span> })) {
+  console.<span class="token-function">log</span>(<span class="token-string">`Page ${page.page}:`</span>, page.data)
+  <span class="token-keyword">if</span> (!page.hasMore) <span class="token-keyword">break</span>
+}
+
+<span class="token-comment">// 2. Cursor-based Async Iterator</span>
+<span class="token-keyword">for await</span> (<span class="token-keyword">const</span> batch <span class="token-keyword">of</span> api.<span class="token-function">cursorPaginate</span>&lt;<span class="token-type">LogEntry</span>&gt;(<span class="token-string">'/logs'</span>, { limit: <span class="token-number">100</span> })) {
+  <span class="token-function">processLogs</span>(batch.data)
+}</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="comparison-section" id="comparison">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Feature Benchmark</span>
+          <h2 class="section-title">How Does api-flow-client Compare?</h2>
+          <p class="section-subtitle">
+            See how it stacks up against standard fetch, Axios, and Ky.
+          </p>
+        </div>
+
+        <div class="table-container">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th class="col-highlight">api-flow-client</th>
+                <th>Axios</th>
+                <th>Native Fetch</th>
+                <th>Ky</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Bundle Size (min+gzip)</strong></td>
+                <td class="col-highlight"><span class="badge-tag badge-green">8.5 kB</span></td>
+                <td>~13.5 kB</td>
+                <td>0 kB (built-in)</td>
+                <td>~6.2 kB</td>
+              </tr>
+              <tr>
+                <td><strong>External Dependencies</strong></td>
+                <td class="col-highlight"><strong class="check">0</strong></td>
+                <td>1 (follow-redirects)</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td><strong>401 Token Refresh Mutex</strong></td>
+                <td class="col-highlight"><span class="check">✓ Built-In</span></td>
+                <td><span class="cross">✗ Manual Boilerplate</span></td>
+                <td><span class="cross">✗ None</span></td>
+                <td><span class="cross">✗ None</span></td>
+              </tr>
+              <tr>
+                <td><strong>In-Memory LRU Cache + TTL</strong></td>
+                <td class="col-highlight"><span class="check">✓ Built-In</span></td>
+                <td><span class="cross">✗ Requires Plugin</span></td>
+                <td><span class="cross">✗ None</span></td>
+                <td><span class="cross">✗ None</span></td>
+              </tr>
+              <tr>
+                <td><strong>Regex Pattern Invalidation</strong></td>
+                <td class="col-highlight"><span class="check">✓ Built-In</span></td>
+                <td><span class="cross">✗ None</span></td>
+                <td><span class="cross">✗ None</span></td>
+                <td><span class="cross">✗ None</span></td>
+              </tr>
+              <tr>
+                <td><strong>Auto-Retry with Jitter</strong></td>
+                <td class="col-highlight"><span class="check">✓ Built-In</span></td>
+                <td><span class="cross">✗ Requires Plugin</span></td>
+                <td><span class="cross">✗ None</span></td>
+                <td><span class="check">✓ Built-In</span></td>
+              </tr>
+              <tr>
+                <td><strong>In-Flight Request Deduplication</strong></td>
+                <td class="col-highlight"><span class="check">✓ Built-In</span></td>
+                <td><span class="cross">✗ None</span></td>
+                <td><span class="cross">✗ None</span></td>
+                <td><span class="cross">✗ None</span></td>
+              </tr>
+              <tr>
+                <td><strong>Official React Hooks Package</strong></td>
+                <td class="col-highlight"><span class="check">✓ Built-In (useGet, usePost...)</span></td>
+                <td><span class="cross">✗ Third Party</span></td>
+                <td><span class="cross">✗ None</span></td>
+                <td><span class="cross">✗ None</span></td>
+              </tr>
+              <tr>
+                <td><strong>SSR Cookie & Header Extraction</strong></td>
+                <td class="col-highlight"><span class="check">✓ Built-In</span></td>
+                <td><span class="cross">✗ Manual</span></td>
+                <td><span class="cross">✗ Manual</span></td>
+                <td><span class="cross">✗ Manual</span></td>
+              </tr>
+              <tr>
+                <td><strong>File Upload / Download Progress</strong></td>
+                <td class="col-highlight"><span class="check">✓ Built-In</span></td>
+                <td><span class="check">✓ Built-In</span></td>
+                <td><span class="cross">✗ Complex Streams</span></td>
+                <td><span class="cross">✗ None</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Support / Donate Section (PayPal Wala) -->
+    <section class="donate-section" id="donate">
+      <div class="container">
+        <div class="donate-card">
+          <div class="donate-badge">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            Support Open Source Development
+          </div>
+
+          <h2 class="donate-title">Help Fuel api-flow-client ☕</h2>
+          
+          <p class="donate-description">
+            Hi! I'm <strong>Imtiaz</strong>, the creator and maintainer of <code>api-flow-client</code>. 
+            This package is 100% free, MIT licensed, and developed with passion to save developers hundreds of boilerplate hours. 
+            If api-flow-client has helped your projects or company, consider buying me a coffee or becoming a sponsor. Every contribution keeps the project active, tested, and constantly improving!
+          </p>
+
+          <!-- Preset Donation Tiers -->
+          <div class="donation-tiers">
+            <a href="https://paypal.me/imtiaz579/5" target="_blank" rel="noopener noreferrer" class="tier-card">
+              <div class="tier-icon">☕</div>
+              <div class="tier-amount">$5</div>
+              <div class="tier-name">Buy a Coffee</div>
+              <p class="tier-text">Fuel late-night bugfixes and feature releases.</p>
+              <span class="tier-btn">Donate $5 &rarr;</span>
+            </a>
+
+            <a href="https://paypal.me/imtiaz579/15" target="_blank" rel="noopener noreferrer" class="tier-card tier-card-popular">
+              <div class="tier-badge">Most Popular</div>
+              <div class="tier-icon">🚀</div>
+              <div class="tier-amount">$15</div>
+              <div class="tier-name">Project Booster</div>
+              <p class="tier-text">Supports server costs, CI/CD testing, and documentation.</p>
+              <span class="tier-btn">Donate $15 &rarr;</span>
+            </a>
+
+            <a href="https://paypal.me/imtiaz579/50" target="_blank" rel="noopener noreferrer" class="tier-card">
+              <div class="tier-icon">👑</div>
+              <div class="tier-amount">$50</div>
+              <div class="tier-name">Gold Sponsor</div>
+              <p class="tier-text">For teams and organizations using api-flow in production.</p>
+              <span class="tier-btn">Donate $50 &rarr;</span>
+            </a>
+          </div>
+
+          <!-- Direct Custom Link & Copy Handle -->
+          <div class="donate-custom-box">
+            <div class="custom-paypal-info">
+              <div class="paypal-logo-badge">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                  <path d="M20.067 8.478c.492.315.844.82 1.03 1.474.37 1.306.05 2.875-.95 4.664-1.393 2.503-3.69 3.864-6.83 4.05l-.32 1.724a.63.63 0 0 1-.62.51h-2.91a.48.48 0 0 1-.47-.56l1.79-9.59a.78.78 0 0 1 .77-.64h4.48c1.78 0 3.03.4 3.73 1.25l.32.118z"/>
+                </svg>
+                <span>Direct PayPal: <strong>paypal.me/imtiaz579</strong></span>
+              </div>
+              <button id="copyPaypalBtn" class="btn btn-secondary btn-sm" title="Copy PayPal Link">
+                <span>Copy Link</span>
+              </button>
+            </div>
+
+            <a href="https://paypal.me/imtiaz579" target="_blank" rel="noopener noreferrer" class="btn btn-paypal btn-lg">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+              <span>Donate Custom Amount via PayPal</span>
+            </a>
+          </div>
+
+          <div class="sponsor-perks">
+            <div class="perk-item">
+              <span class="perk-check">✓</span> 100% directly supports open-source maintenance
+            </div>
+            <div class="perk-item">
+              <span class="perk-check">✓</span> Priority review on GitHub issues &amp; feature requests
+            </div>
+            <div class="perk-item">
+              <span class="perk-check">✓</span> Featured in the README Sponsors section
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Accordion -->
+    <section class="faq-section" id="faq">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Frequently Asked Questions</span>
+          <h2 class="section-title">Common Questions</h2>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item" open>
+            <summary class="faq-question">
+              <span>Is api-flow-client truly zero dependencies?</span>
+              <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              <p>Yes! In default mode, api-flow-client has <strong>zero runtime dependencies</strong>. It uses the platform's native <code>fetch</code> and <code>AbortController</code>, which are standard in modern browsers, Node.js 18+, Bun, Deno, and React Native. Axios is only an optional peer dependency if you explicitly want to use the Axios adapter.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>How does the 401 token refresh mutex work?</span>
+              <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              <p>When multiple concurrent API calls receive a 401 Unauthorized status, standard clients fire multiple simultaneous refresh token requests (which can cause invalidation race conditions). <code>api-flow-client</code> utilizes an internal mutex queue: the first request triggers your <code>auth.refresh()</code> callback while subsequent failing requests are parked in a promise queue. Once the new token arrives, all queued requests are automatically re-executed with the new authorization header.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>Can I use api-flow-client in Next.js Server Components?</span>
+              <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              <p>Absolutely. api-flow-client exports <code>createServerSideApi</code> and <code>extractServerHeaders</code>, specifically designed for Next.js App Router (Server Components & Server Actions) and Pages Router. It automatically extracts incoming cookies, client IPs, and auth tokens from headers and forwards them without browser-only APIs.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>How do I install the React hooks?</span>
+              <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              <p>The React hooks are bundled inside the same package under a dedicated export path: <code>import { useGet, useMutation, usePost, usePut, usePatch, useDelete } from 'api-flow-client/hooks'</code>. This keeps them tree-shaken from non-React environments like pure Node.js services or Vue applications.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>How can I contribute or report a bug?</span>
+              <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              <p>Visit the official GitHub repository at <a href="https://github.com/imtiaz-dev-0/api-flow" target="_blank" rel="noopener noreferrer">github.com/imtiaz-dev-0/api-flow</a>. Open an issue or pull request. Contributions, bug reports, and feedback are always welcome!</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">
+          <img src="assets/logo.svg" alt="api-flow-client Logo" width="32" height="32">
+          <span class="logo-title">api-flow<span class="logo-accent">-client</span></span>
+        </a>
+        <p class="footer-tagline">
+          The easiest and most powerful API client for JavaScript and TypeScript. Zero dependencies, fully typed, works everywhere.
+        </p>
+        <div class="footer-donate-cta">
+          <a href="https://paypal.me/imtiaz579" target="_blank" rel="noopener noreferrer" class="btn btn-paypal btn-sm">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            <span>Support via PayPal (imtiaz579)</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-links-group">
+        <div class="footer-col">
+          <h4>Documentation</h4>
+          <ul>
+            <li><a href="#quickstart">Quick Start</a></li>
+            <li><a href="#features">Core Features</a></li>
+            <li><a href="#examples">React Hooks</a></li>
+            <li><a href="#simulator">Live Playground</a></li>
+            <li><a href="#comparison">Comparison Matrix</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Community &amp; Links</h4>
+          <ul>
+            <li><a href="https://www.npmjs.com/package/api-flow-client" target="_blank" rel="noopener noreferrer">npm Package (v1.1.1)</a></li>
+            <li><a href="https://github.com/imtiaz-dev-0/api-flow" target="_blank" rel="noopener noreferrer">GitHub Repository</a></li>
+            <li><a href="https://github.com/imtiaz-dev-0/api-flow/issues" target="_blank" rel="noopener noreferrer">Issues &amp; Discussions</a></li>
+            <li><a href="https://github.com/imtiaz-dev-0/api-flow/blob/main/CHANGELOG.md" target="_blank" rel="noopener noreferrer">Changelog</a></li>
+            <li><a href="https://paypal.me/imtiaz579" target="_blank" rel="noopener noreferrer">Donate via PayPal</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container footer-bottom-container">
+        <p class="copyright">
+          &copy; 2026 <strong>api-flow-client</strong>. Created with care by <a href="https://github.com/imtiaz-dev-0" target="_blank" rel="noopener noreferrer">Imtiaz</a>. Released under the MIT License.
+        </p>
+        <p class="domain-badge">
+          Domain: <code>api-flow-client.online</code>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

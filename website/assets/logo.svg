@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="flowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#a855f7" />
+    </linearGradient>
+    <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#67e8f9" />
+      <stop offset="100%" stop-color="#818cf8" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Glowing outer orbit ring -->
+  <circle cx="50" cy="50" r="42" stroke="url(#flowGrad)" stroke-width="2.5" stroke-dasharray="8 6" opacity="0.4" />
+  
+  <!-- Flow paths representing request/response streams -->
+  <path d="M 22 50 C 22 34, 38 24, 52 24 C 66 24, 78 35, 78 50 C 78 66, 62 76, 48 76 C 34 76, 22 66, 22 50 Z" 
+        stroke="url(#flowGrad)" stroke-width="5" stroke-linecap="round" fill="none" filter="url(#glow)"/>
+        
+  <!-- Core dynamic lightning wave flow -->
+  <path d="M 30 50 Q 42 32, 50 50 T 70 50" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.9" />
+
+  <!-- Flow pulse dots (representing tokens / requests) -->
+  <circle cx="28" cy="40" r="4.5" fill="url(#nodeGrad)" filter="url(#glow)" />
+  <circle cx="50" cy="24" r="5" fill="#38bdf8" filter="url(#glow)" />
+  <circle cx="74" cy="44" r="4.5" fill="#a855f7" filter="url(#glow)" />
+  <circle cx="64" cy="70" r="5.5" fill="url(#nodeGrad)" filter="url(#glow)" />
+  <circle cx="36" cy="68" r="4" fill="#6366f1" filter="url(#glow)" />
+  
+  <!-- Center hub node -->
+  <circle cx="50" cy="50" r="7" fill="#0f172a" stroke="url(#flowGrad)" stroke-width="3" />
+  <circle cx="50" cy="50" r="3" fill="#38bdf8" />
+</svg>
